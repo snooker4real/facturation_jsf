@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Facturation</title>
+</h:head>
+
+<f:view>
+	<h:body>
+		<h1>Facturation</h1>
+		<a href="ajoutCLient.xhtml">Ajouter un client</a>
+		<p:dataTable id="clients" var="client" value="#{clientsBean.clients}">
+			<f:facet name="header">
+				<h2>Liste des Clients</h2>
+				<p:commandButton id="toggler" type="button" value="Options" style="float:right" icon="ui-icon-calculator" />
+				<p:columnToggler datasource="clients" trigger="toggler" />
+			</f:facet>
+
+			<p:column headerText="Id">
+				<h:outputText value="#{client.id}" />
+			</p:column>
+
+			<p:column headerText="Nom">
+				<h:outputText value="#{client.nom}" />
+			</p:column>
+
+			<p:column headerText="Factures">
+				<!--<h:outputText value="#{client.facture}" />-->
+				<c:forEach items="#{factureBean.factureService.getFactureByClientId(client.id)}" var="facture">
+					<p><h:outputText value="Facture #{facture.id}"/></p>
+				</c:forEach>
+			</p:column>
+
+			<p:column headerText="Actions">
+				<h:outputText value="Modifier" />
+				<h:outputText value="Ajouter une facture" />
+			</p:column>
+
+		</p:dataTable>
+		<br />
+
+		<br />
+		<a href="ajoutCLient.xhtml">Ajouter un client</a>
+	</h:body>
+</f:view>
+</html>
